@@ -1,0 +1,9 @@
+{
+  "name": "COSMIQ",
+  "short_name": "COSMIQ",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#0B1829",
+  "background_color": "#030810",
+  "icons": []
+}
