@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from datetime import date, time
+from typing import Optional
 
 from pydantic import BaseModel, Field, field_validator
 
@@ -56,3 +57,26 @@ class ChartResponse(BaseModel):
     aspects: list[AspectData]
     nakshatra: NakshatraData
 
+
+class SourcePassage(BaseModel):
+    id: str
+    source: str
+    excerpt: str
+
+
+class InsightRequest(BaseModel):
+    aspects: list[AspectData]
+    domains: Optional[list[str]] = None
+
+
+class InsightData(BaseModel):
+    domain: str
+    score: int
+    advice: str
+    aspect: AspectData
+    math_str: str
+    source_passage: SourcePassage
+
+
+class InsightResponse(BaseModel):
+    insights: list[InsightData]

@@ -41,6 +41,21 @@ export type ChartResponse = {
   };
 };
 
+export type SourcePassage = {
+  id: string;
+  source: string;
+  excerpt: string;
+};
+
+export type InsightData = {
+  domain: string;
+  score: number;
+  advice: string;
+  aspect: AspectData;
+  math_str: string;
+  source_passage: SourcePassage;
+};
+
 export async function postChart(payload: ChartRequest): Promise<ChartResponse> {
   const response = await fetch("/api/proxy/chart", {
     method: "POST",
@@ -53,6 +68,26 @@ export async function postChart(payload: ChartRequest): Promise<ChartResponse> {
   if (!response.ok) {
     const detail = await response.text();
     throw new Error(detail || "Chart request failed.");
+  }
+
+  return response.json();
+}
+
+export async function postInsight(payload: {
+  aspects: AspectData[];
+  domains?: string[];
+}): Promise<{ insights: InsightData[] }> {
+  const response = await fetch("/api/proxy/insight", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(payload)
+  });
+
+  if (!response.ok) {
+    const detail = await response.text();
+    throw new Error(detail || "Insight request failed.");
   }
 
   return response.json();

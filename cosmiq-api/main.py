@@ -7,6 +7,7 @@ from core.config import get_settings
 from core.security import ProxyTokenMiddleware
 from routers.chart import router as chart_router
 from routers.health import router as health_router
+from routers.insight import router as insight_router
 
 
 def create_app() -> FastAPI:
@@ -33,8 +34,8 @@ def create_app() -> FastAPI:
 
     app.include_router(health_router)
     app.include_router(chart_router)
+    app.include_router(insight_router)
     return app
 
 
 app = create_app()
-

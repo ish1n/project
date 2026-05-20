@@ -5,8 +5,8 @@ Initial Sprint 1 scaffold for the COSMIQ platform described in
 
 ## Layout
 
-- `cosmiq-api/`: FastAPI backend with `/health` and `/chart`
-- `cosmiq-web/`: Next.js 14 App Router scaffold with a backend-for-frontend proxy
+- `cosmiq-api/`: FastAPI backend with `/health`, `/chart`, and `/insight`
+- `cosmiq-web/`: Next.js App Router workbench with a backend-for-frontend proxy
 
 ## Backend quick start
 
@@ -34,5 +34,6 @@ spec:
 - FastAPI scaffold
 - `/health` endpoint
 - `/chart` endpoint with Swiss Ephemeris integration hooks
-- Next.js proxy scaffold for frontend integration
-
+- `/insight` endpoint with deterministic fallback advice and source passages
+- Next.js chart workbench with animated wheel, aspect filters, insight cards,
+  planet table, local chart history, and JSON export
