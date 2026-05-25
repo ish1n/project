@@ -37,3 +37,10 @@ spec:
 - `/insight` endpoint with deterministic fallback advice and source passages
 - Next.js chart workbench with animated wheel, aspect filters, insight cards,
   planet table, local chart history, and JSON export
+
+## Frontend (Ishan-owned) additions
+
+- CSP + security headers via Next.js middleware (`Content-Security-Policy` with per-request nonce, clickjacking/XSS hardening defaults)
+- Backend-for-frontend proxy uses `COSMIQ_API_URL` and forwards `CF-Worker-Token` server-to-server
+- PWA shell: `public/manifest.json`, offline page (`/offline`), service worker (`public/sw.js`), and app-side SW registration
+- Basic CI workflow for `cosmiq-web`: `npm ci`, `npm audit --audit-level=high`, `npm run build`
