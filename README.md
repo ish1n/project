@@ -1,7 +1,13 @@
 # COSMIQ
 
-Initial Sprint 1 scaffold for the COSMIQ platform described in
-`/Users/jatinsrivastava/Downloads/COSMIQ_Architecture_Security.docx`.
+COSMIQ is an AI-native decision intelligence platform that treats planetary
+geometry as a deterministic upstream signal for productivity tools, decision
+logging, relationship analysis, calendar-aware recommendations, and operational
+memory.
+
+It is not an astrology-content app. The product goal is an enterprise-grade
+system where every recommendation is explainable, scored, auditable, and tied
+to concrete workflow action.
 
 ## Layout
 
@@ -28,8 +34,7 @@ npm run dev
 
 ## Current scope
 
-This repo currently implements the Sprint 1 backend critical path from the
-spec:
+This repo currently implements the Sprint 1 backend critical path:
 
 - FastAPI scaffold
 - `/health` endpoint
@@ -37,6 +42,20 @@ spec:
 - `/insight` endpoint with deterministic fallback advice and source passages
 - Next.js chart workbench with animated wheel, aspect filters, insight cards,
   planet table, local chart history, and JSON export
+
+## Production planning docs
+
+The production architecture and senior engineering planning package lives under
+`docs/`:
+
+- `docs/COSMIQ_MASTER_PROMPT.md`: master prompt for architecture and planning workflows
+- `docs/architecture.md`: executive architecture, C4-style boundaries, data flow, and ownership
+- `docs/api-contracts.md`: API contract catalog with request/response shapes and failure modes
+- `docs/data-rag-cache.md`: PostgreSQL schema, multi-index RAG, Redis keyspace, and caching plan
+- `docs/security-observability.md`: threat model, security architecture, SLOs, telemetry, and incident response
+- `docs/delivery-plan.md`: 6-sprint delivery plan for Jatin and Ishan
+- `docs/risk-and-moat.md`: risk register and unique product moat analysis
+- `docs/adr/`: ADR baseline for the production architecture
 
 ## Frontend (Ishan-owned) additions
 
