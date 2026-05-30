@@ -723,6 +723,169 @@ a {
   text-align: center;
 }
 
+.auth-shell {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  padding: 24px;
+}
+
+.auth-card {
+  width: min(100%, 420px);
+  padding: 22px;
+}
+
+.auth-card h1 {
+  margin: 4px 0 0;
+  font-size: 1.55rem;
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: minmax(270px, 340px) minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.feature-grid.compact {
+  grid-template-columns: minmax(270px, 360px) minmax(0, 780px);
+}
+
+.feature-controls,
+.feature-main {
+  padding: 18px;
+}
+
+.feature-main {
+  min-height: 560px;
+}
+
+.metric-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.metric-card {
+  display: grid;
+  gap: 6px;
+  min-height: 92px;
+  align-content: center;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fffaf0;
+  padding: 14px;
+}
+
+.metric-card span {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.metric-card strong {
+  overflow-wrap: anywhere;
+  font-size: 1.2rem;
+}
+
+.recommendation-strip {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 16px;
+  border: 1px solid rgba(20, 108, 101, 0.26);
+  border-radius: 8px;
+  background: rgba(20, 108, 101, 0.08);
+  padding: 14px;
+}
+
+.recommendation-strip span {
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.feature-aspects {
+  max-height: 520px;
+}
+
+.feature-empty {
+  min-height: 520px;
+}
+
+.forecast-list {
+  display: grid;
+  gap: 10px;
+}
+
+.forecast-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: 12px;
+  align-items: center;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fffaf0;
+  padding: 12px;
+}
+
+.forecast-row div:first-child {
+  display: grid;
+  gap: 4px;
+}
+
+.forecast-row span,
+.forecast-row small {
+  color: var(--muted);
+  font-size: 0.84rem;
+}
+
+.score-pill {
+  min-width: 42px;
+  border-radius: 999px;
+  padding: 6px 10px;
+  color: white;
+  font-weight: 700;
+  text-align: center;
+}
+
+.score-pill.tense {
+  background: var(--rose);
+}
+
+.score-pill.flow {
+  background: var(--teal);
+}
+
+.moon-orbit {
+  display: grid;
+  min-height: 350px;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background:
+    linear-gradient(180deg, rgba(255, 253, 247, 0.7), rgba(236, 229, 216, 0.82)),
+    repeating-linear-gradient(45deg, rgba(23, 20, 17, 0.035) 0 1px, transparent 1px 12px);
+}
+
+.moon-orbit div {
+  width: min(220px, 52vw);
+  aspect-ratio: 1;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background:
+    linear-gradient(90deg, #161412 var(--illumination), #f7f1e6 var(--illumination)),
+    #f7f1e6;
+  box-shadow: 0 22px 44px rgba(23, 20, 17, 0.18);
+}
+
+.moon-orbit span {
+  margin-top: 16px;
+  color: var(--teal);
+  font-weight: 700;
+}
+
 @keyframes page-in {
   from {
     opacity: 0;
@@ -804,6 +967,11 @@ a {
     grid-column: 1 / -1;
   }
 
+  .feature-grid,
+  .feature-grid.compact {
+    grid-template-columns: 1fr;
+  }
+
   .aspect-list {
     max-height: none;
   }
@@ -872,6 +1040,18 @@ a {
 
   .planet-row {
     grid-template-columns: 1fr 1fr;
+  }
+
+  .metric-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .forecast-row {
+    grid-template-columns: 1fr auto;
+  }
+
+  .forecast-row small {
+    grid-column: 1 / -1;
   }
 }
 

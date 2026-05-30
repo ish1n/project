@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from datetime import date, time
+from datetime import date, datetime, time
 from typing import Optional
 
 from pydantic import BaseModel, Field, field_validator
@@ -80,3 +80,88 @@ class InsightData(BaseModel):
 
 class InsightResponse(BaseModel):
     insights: list[InsightData]
+
+
+class TransitRequest(BaseModel):
+    natal: ChartRequest
+    transit_moment: Optional[datetime] = None
+
+    @field_validator("transit_moment")
+    @classmethod
+    def validate_transit_moment_has_offset(cls, value: Optional[datetime]) -> Optional[datetime]:
+        if value is None:
+            return value
+        if value.tzinfo is None or value.utcoffset() is None:
+            raise ValueError("transit_moment must include an explicit timezone offset.")
+        return value
+
+
+class TransitAspectData(BaseModel):
+    natal_planet: str
+    transit_planet: str
+    name: str
+    symbol: str
+    angle: float
+    exact_angle: float
+    orb: float
+    applying: bool
+    tension_score: int
+    energy: str
+    math_str: str
+
+
+class TransitResponse(BaseModel):
+    transit_moment_utc: datetime
+    transit_planets: dict[str, PlanetData]
+    transit_aspects: list[TransitAspectData]
+    pressure_score: int
+    recommendation: str
+    math_summary: str
+
+
+class ForecastRequest(BaseModel):
+    natal: ChartRequest
+    start_date: date
+    days: int = Field(default=14, ge=1, le=30)
+
+
+class ForecastDay(BaseModel):
+    date: date
+    pressure_score: int
+    dominant_energy: str
+    aspect_count: int
+    top_window: str
+    math_summary: str
+
+
+class ForecastResponse(BaseModel):
+    generated_at_utc: datetime
+    days: list[ForecastDay]
+    summary: str
+
+
+class MoonRequest(BaseModel):
+    moment: Optional[datetime] = None
+
+    @field_validator("moment")
+    @classmethod
+    def validate_moment_has_offset(cls, value: Optional[datetime]) -> Optional[datetime]:
+        if value is None:
+            return value
+        if value.tzinfo is None or value.utcoffset() is None:
+            raise ValueError("moment must include an explicit timezone offset.")
+        return value
+
+
+class MoonResponse(BaseModel):
+    moment_utc: datetime
+    phase_name: str
+    phase_angle: float
+    illumination: float
+    moon_sign: str
+    moon_degree: float
+    moon_speed: float
+    moon_nakshatra: str
+    nakshatra_index: int
+    advisory: str
+    calculation: str

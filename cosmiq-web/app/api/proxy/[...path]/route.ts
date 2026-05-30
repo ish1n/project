@@ -6,9 +6,13 @@ type RouteContext = {
   }>;
 };
 
+const allowedUpstreamPaths = new Set(["health", "chart", "insight", "transits", "forecast", "moon"]);
+const maxBodyBytes = 64 * 1024;
+
 async function proxyRequest(request: NextRequest, context: RouteContext) {
   const baseUrl = process.env.COSMIQ_API_URL;
   const params = await context.params;
+  const upstreamPath = params.path.join("/");
 
   if (!baseUrl) {
     return NextResponse.json(
@@ -17,7 +21,16 @@ async function proxyRequest(request: NextRequest, context: RouteContext) {
     );
   }
 
-  const upstreamUrl = new URL(params.path.join("/"), ensureTrailingSlash(baseUrl));
+  if (!allowedUpstreamPaths.has(upstreamPath)) {
+    return NextResponse.json({ detail: "Proxy path is not allowed." }, { status: 404 });
+  }
+
+  const body = canSendBody(request.method) ? await request.text() : undefined;
+  if (body && new TextEncoder().encode(body).byteLength > maxBodyBytes) {
+    return NextResponse.json({ detail: "Request body is too large." }, { status: 413 });
+  }
+
+  const upstreamUrl = new URL(upstreamPath, ensureTrailingSlash(baseUrl));
   upstreamUrl.search = request.nextUrl.search;
 
   const headers = new Headers();
@@ -41,13 +54,15 @@ async function proxyRequest(request: NextRequest, context: RouteContext) {
   const upstreamResponse = await fetch(upstreamUrl, {
     method: request.method,
     headers,
-    body: canSendBody(request.method) ? await request.text() : undefined,
+    body,
     cache: "no-store"
   });
 
   const responseHeaders = new Headers(upstreamResponse.headers);
   responseHeaders.delete("content-length");
   responseHeaders.delete("content-encoding");
+  responseHeaders.set("Cache-Control", "no-store");
+  responseHeaders.set("X-COSMIQ-Proxy", "bff");
 
   return new NextResponse(await upstreamResponse.text(), {
     status: upstreamResponse.status,

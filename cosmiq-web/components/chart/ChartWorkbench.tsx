@@ -632,7 +632,11 @@ function EmptyState({ label }: { label: string }) {
 function polarToCartesian(longitude: number, radius: number) {
   const angle = ((longitude - 90) * Math.PI) / 180;
   return {
-    x: 210 + radius * Math.cos(angle),
-    y: 210 + radius * Math.sin(angle)
+    x: roundCoordinate(210 + radius * Math.cos(angle)),
+    y: roundCoordinate(210 + radius * Math.sin(angle))
   };
+}
+
+function roundCoordinate(value: number) {
+  return Number(value.toFixed(4));
 }
